@@ -18,9 +18,23 @@ from pypdf import PdfReader
 # 1. CONFIGURATION
 # --------------------------------------------------
 
+
 load_dotenv()
 
-MODEL = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
+def get_setting(name, default=None):
+    value = os.getenv(name)
+
+    if value:
+        return value
+
+    try:
+        return st.secrets[name]
+    except Exception:
+        return default
+
+
+MODEL = get_setting("GEMINI_MODEL", "gemini-3.8-flash")
+
 
 st.set_page_config(
     page_title="Apply Wisely",
@@ -469,7 +483,7 @@ def clean_analysis(data):
 def analyze_with_gemini(cv_text, job_description, language):
     """Compare a CV and job advertisement using structured Gemini output."""
 
-    api_key = os.getenv("GEMINI_API_KEY")
+    api_key = get_setting("GEMINI_API_KEY")
 
     if not api_key:
         raise ValueError(
