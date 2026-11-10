@@ -904,6 +904,200 @@ Analyze the documents now.
 # APPLY WISELY HEADER
 # --------------------------------------------------
 
+# --------------------------------------------------
+# HOMEPAGE AND NAVIGATION
+# --------------------------------------------------
+
+# Default page
+if "app_page" not in st.session_state:
+    st.session_state["app_page"] = "Home"
+
+
+def go_to_analyzer():
+    st.session_state["app_page"] = "Analyze CV"
+
+
+# Navigation bar
+brand_col, nav_col = st.columns([1, 2])
+
+with brand_col:
+    st.markdown(
+        """
+        <h2 style="color:#925F7D; margin-top:0;">
+            🎀 Apply Wisely ♡
+        </h2>
+        """,
+        unsafe_allow_html=True
+    )
+
+with nav_col:
+    st.radio(
+        "Navigation",
+        ["Home", "Analyze CV"],
+        horizontal=True,
+        key="app_page",
+        label_visibility="collapsed"
+    )
+
+
+# --------------------------------------------------
+# HOMEPAGE CONTENT
+# --------------------------------------------------
+
+if st.session_state["app_page"] == "Home":
+
+    hero_text, hero_image = st.columns(
+        [1, 1],
+        gap="large",
+        vertical_alignment="center"
+    )
+
+    with hero_text:
+
+        st.markdown(
+            """
+            <div style="
+                display:inline-block;
+                background:#F8E5F0;
+                color:#925F7D;
+                padding:8px 17px;
+                border-radius:30px;
+                font-weight:600;
+                margin-bottom:15px;
+            ">
+                Your AI Career Assistant ✨
+            </div>
+
+            <h1 style="
+                font-family:Georgia,serif;
+                font-size:48px;
+                line-height:1.15;
+                color:#804B6B;
+            ">
+                Make Smarter<br>
+                Job Applications ♡
+            </h1>
+
+            <p style="
+                color:#72566A;
+                font-size:17px;
+                line-height:1.7;
+            ">
+                Upload your CV and a job description,
+                and let AI analyze your fit, highlight
+                your strengths, find gaps, and give you
+                personalized recommendations.
+            </p>
+
+            <p style="color:#925F7D;">
+                🎯 Match your skills to the job<br>
+                📊 Get a clear analysis<br>
+                💡 Discover your next steps
+            </p>
+            """,
+            unsafe_allow_html=True
+        )
+
+        st.button(
+            "✧ Start an Analysis →",
+            type="primary",
+            use_container_width=True,
+            on_click=go_to_analyzer
+        )
+
+        with st.expander("♡ How does it work?"):
+
+            st.write(
+                "1. Upload your CV as a PDF.\n\n"
+                "2. Paste a job advertisement.\n\n"
+                "3. Receive your AI-powered analysis, "
+                "skills assessment and recommendations."
+            )
+
+    with hero_image:
+
+        image_path = "assets/homepage_illustration.png"
+
+        if os.path.exists(image_path):
+            st.image(
+                image_path,
+                use_container_width=True
+            )
+        else:
+            st.warning("Homepage illustration not found.")
+
+    st.markdown(
+        """
+        <h2 style="
+            text-align:center;
+            color:#925F7D;
+            margin-top:35px;
+        ">
+            What you can do with Apply Wisely ♡
+        </h2>
+        """,
+        unsafe_allow_html=True
+    )
+
+    feature1, feature2, feature3 = st.columns(3)
+
+    with feature1:
+        with st.container(border=True):
+            st.markdown("### 📄 Match your CV")
+            st.write(
+                "Discover how well your qualifications "
+                "fit a job advertisement."
+            )
+
+    with feature2:
+        with st.container(border=True):
+            st.markdown("### 📊 Identify skill gaps")
+            st.write(
+                "Understand which skills you should "
+                "develop or demonstrate."
+            )
+
+    with feature3:
+        with st.container(border=True):
+            st.markdown("### 💡 Get recommendations")
+            st.write(
+                "Receive personalized suggestions "
+                "to strengthen your application."
+            )
+
+    st.markdown(
+        """
+        <div style="
+            background:#F8EAF2;
+            padding:25px;
+            border-radius:20px;
+            text-align:center;
+            margin-top:25px;
+            color:#804B6B;
+        ">
+            <h3>Ready for your next opportunity? ♡</h3>
+            Make every application a little smarter.
+        </div>
+
+        <p style="
+            text-align:center;
+            color:#A78A9D;
+            padding:25px;
+        ">
+            Made with ♡ | Apply Wisely
+        </p>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Stop here when displaying the homepage.
+    st.stop()
+
+
+# --------------------------------------------------
+# EXISTING CV ANALYZER CONTINUES BELOW
+# --------------------------------------------------
+
 st.title("🎯 Apply Wisely")
 
 selected_language = st.selectbox(
